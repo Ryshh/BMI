@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BMI</title>
+</head>
+<body>
+
+    <input type="number"id="weight" placeholder="Súly (kg)">
+    <input type="number" id="height" placeholder="Magasság (cm)">
+    <input type="button" value="Calculate" id="calculate" onclick="calc()">
+    <input type="button" value="Reset" id="reset" onclick="reset()">
+    <p id="result"></p>
+
+    <script>
+        const obeseMeter = 
+        [
+            {min:0, max:18.5, category:'underweight', emoji:'🥶'},
+            {min:18.5, max:24.9, category:'normal', emoji:'🙃'},
+            {min:25, max:29.9, category:'overweight', emoji:'😱'},
+            {min:30, max:34.9, category:'obese', emoji:'🤡'},
+            {min:35, max:9999999999, category:'extremely obese', emoji:'💀'}
+        ]
+
+        function reset() 
+        {
+            document.getElementById('result').textContent = ''
+            document.getElementById('weight').value = ''
+            document.getElementById('height').value = ''
+        }
+
+        function calc() 
+        {
+            let weight = +document.getElementById('weight').value
+            let heigth =+document.getElementById('height').value / 100
+        }
+
+    </script>
+</body>
+</html>
