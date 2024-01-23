@@ -4,25 +4,102 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BMI</title>
-</head>
-<body>
+    <style>
+        body
+        {
+            text-align: center;
+            font-family: sans-serif;
+            background-color: rgb(13, 13, 13);
+            color: white;
+            margin: 100px;
+        }
 
-    <input type="number"id="weight" placeholder="Súly (kg)">
-    <input type="number" id="height" placeholder="Magasság (cm)">
-    <input type="button" value="Calculate" id="calculate" onclick="calc()">
-    <input type="button" value="Reset" id="reset" onclick="reset()">
-    <p id="result"></p>
+        .container
+        {
+            background-color: rgb(25, 25, 25);
+            width: 250px;
+            height: 300px;
+            margin: auto;
+            padding: 20px;
+            border: 1px solid rgb(25, 25, 25);
+            border-radius: 15px;
+            animation-name: borderC;
+            animation-duration: 3s;
+            animation-iteration-count: infinite;
+        }
+
+        @keyframes borderC
+        {
+            0%   {border-color: rgb(86, 86, 255);}
+            33%  {border-color: blue;}
+            66%  {border-color: darkblue;}
+            100%  {border-color: rgb(86, 86, 255);}
+        }
+
+        #calc
+        {
+            background-color: rgb(25, 25, 25);
+            border: 1px solid blue;
+            color: white;
+            border-radius: 5px;
+            padding: 10px;
+        }
+
+        #calc:hover
+        {
+            background-color: blue;
+        }
+
+        #reset
+        {
+            background-color: rgb(25, 25, 25);
+            border: 1px solid red;
+            color: white;
+            border-radius: 5px;
+            padding: 10px;
+        }
+
+        #reset:hover
+        {
+            background-color: red;
+        }
+
+        #height
+        {
+            background-color: rgb(25, 25, 25);
+            border: 1px solid blue;
+            border-radius: 5px;
+            height: 30px;
+            color: white;
+        }
+
+        #weight
+        {
+            background-color: rgb(25, 25, 25);
+            border: 1px solid blue;
+            border-radius: 5px; 
+            height: 30px;
+            color: white;
+        }
+
+        input::placeholder
+        {
+            color: rgb(50, 50, 50);
+        }
+    </style>
+</head> 
+<body>
+    <div class="container">
+        <h2>BMI Calculator</h2>
+        <input type="number"id="weight" placeholder=" Súly (kg)"><br><br>
+        <input type="number" id="height" placeholder=" Magasság (cm)"><br><br>
+        <input type="button" value="Calculate" id="calc" onclick="calc()">
+        <input type="button" value="Reset" id="reset" onclick="reset()">
+        <p id="result"></p>
+    </div>
+
 
     <script>
-        const obeseMeter = 
-        [
-            {min:0, max:18.5, category:'underweight', emoji:'🥶'},
-            {min:18.5, max:24.9, category:'normal', emoji:'🙃'},
-            {min:25, max:29.9, category:'overweight', emoji:'😱'},
-            {min:30, max:34.9, category:'obese', emoji:'🤡'},
-            {min:35, max:9999999999, category:'extremely obese', emoji:'💀'}
-        ]
-
         function reset() 
         {
             document.getElementById('result').textContent = ''
@@ -33,9 +110,28 @@
         function calc() 
         {
             let weight = +document.getElementById('weight').value
-            let heigth =+document.getElementById('height').value / 100
+            let heigth = +document.getElementById('height').value
+            let bmi = weight/((heigth/100.0) * (heigth/100.0));
+            let obeseMeter = undefined;
+            if (between(bmi, 0.0, 18.5))
+                obeseMeter = 'underweight 🥶';
+            else if (between(bmi, 18.6, 24.9))
+                obeseMeter = 'normal 🙃';
+            else if (between(bmi, 25.0, 29.9))
+                obeseMeter = 'overweight 😱';
+            else if (between(bmi, 30.0, 34.9))
+                obeseMeter = 'obese 😱';
+            else
+            obeseMeter = 'extremely obese 💀';
+            const resultId = document.getElementById("result");
+            let result = "BMI: " + bmi.toFixed(2) + "<br>" + "Category: " + obeseMeter;
+            resultId.innerHTML = result;
         }
 
+        function between(v, a, b)
+        {
+            return v >= a && v < b;
+        }
     </script>
 </body>
 </html>
